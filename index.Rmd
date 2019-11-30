@@ -1,0 +1,88 @@
+---
+title: "CPC workshop"
+author: "Sydney Precision Bioinformatics Group"
+date: "04 November 2019"
+output:
+  html_document:
+    css: style.css
+---
+
+# Single Cell Plus
+
+This workshop is funded by "Single Cell Plus", a research initiative between Hong Kong University and the University of Sydney.
+
+# Slides
+
+You can find the workshop slides [here](slides.pdf). 
+
+# Aim of this workshop
+
+In this workshop we will focus on two mouse liver datasets to illustrate three critical topics in single-cell RNA-Seq analysis.
+
+  1. Quality control of sc-RNASeq data,
+  1. The `scMerge` package for integrating multiple sc-RNASeq data, 
+  1. Some downstream analyses after `scMerge`. 
+
+
+At the end of this workshop you should have some basic understanding of sc-RNASeq data and some key computational and statistical challenges of this type of data. 
+
+# Prerequisites
+
+Ideally, you should be familiar with `R` and the Bioconductor. However, since this is not a programming workshop, you can still pick up important practical skills by running the codes we provided. 
+
+## Running workshop on Google Cloud
+
+Your instructor will provide you with the links to a Google Cloud server, username and the password. Once you log in, you will have access to RStudio via a webpage. 
+
+Type the following code into your console and you are good to go!
+
+```
+source("/home/user_setup.R")
+```
+
+## Running workshop locally {#local}
+
+  1. Please download and install:
+
+  + Latest `R` from https://cloud.r-project.org/ 
+  + Latest `RStudio` from https://www.rstudio.com/products/rstudio/download/
+  
+  
+  1. In your RStudio console pane, please install all the necessary packages by running [this script](https://raw.githubusercontent.com/SydneyBioX/SC_CPC_workshop/master/install.R). This will take a while. 
+
+  1. Download all the the workshop materials from [this zip file](https://github.com/SydneyBioX/SC_CPC_workshop/archive/master.zip) and unzip it on your Desktop. You should have a folder with the name `/desktop/SC_CPC_workshop-master` created.
+  
+  1. Download the data from [this zip file](https://storage.googleapis.com/scp_data/data.zip) and unzip this file under `/desktop/SC_CPC_workshop-master`, so that you should have a folder created as `/desktop/SC_CPC_workshop-master/data`. 
+  
+  1. Open up `/desktop/SC_CPC_workshop-master/SC_CPC_workshop.Rproj` and you should be able to run every `.Rmd` file in the workshop now. 
+
+
+# Clipboard
+
+In some circumstances, we might need to share codes beyond the existing materials. Please click [here](https://docs.google.com/document/d/136YffzxjkUM8RIGsnjD_yOkCTWw4Ijdwjy4_58nC-zc/edit?usp=sharing) to access these codes. 
+
+
+# References
+
+**Methodologies**
+
+1. Cao Y., Lin Y., Ormerod, J.T., Yang, P., Yang, J., and Lo, K.K. (2019). scDC: Single cell differential composition analysis. Accepted by InCoB 2019.
+
+1. Geddes, T.A., Kim, T., Nan, L., Burchfield, J.G., Yang, J.Y.H., Tao, D., and Yang, P. (2019). Autoencoder-based cluster ensembles for single-cell RNA-seq data analysis. BioRxiv Accepted by InCoB 2019.
+
+1. Kim, T., Lo, K.K., Geddes, T.A., Kim H., Yang, J., and Yang, P. (2019) Accepted by InCoB 2019. scReClassify: post hoc cell type classification of single-cell RNA-seq data.
+
+1. Kim, T., Chen, I.R., Lin, Y., Wang, A.Y.-Y., Yang, J.Y.H., and Yang, P. (2019). [Impact of similarity metrics on single-cell RNA-seq data clustering](https://doi.org/10.1093/bib/bby076). Brief. Bioinform.
+
+1. Lin, Y., Ghazanfar, S., Wang, K.Y.X., Gagnon-Bartsch, J.A., Lo, K.K., Su, X., Han, Z.G., Ormerod, J.T., Speed, T.P., Yang, P., and Yang, J. (2019). [scMerge leverages factor analysis, stable expression, and pseudoreplication to merge multiple single-cell RNA-seq datasets](http://www.pnas.org/lookup/doi/10.1073/pnas.1820006116). Proc. Natl. Acad. Sci. U. S. A.
+
+1. Lin, Y., Ghazanfar, S., Strbenac, D., Wang, A., Patrick, E., Lin, D., Speed, T., Yang, J., and Yang, P. (2019). Evaluating stably expressed genes in single cells. GigaScience.
+
+
+1. Lin, Y., Cao Y., Kim H., Salim A., Speed T., Lin D., Yang P., Yang, J. (2019) scClassify: hierarchical classification of cells. BioRxiv
+
+**Data**
+
+1. Xianbin Su, Yi Shi, Xin Zou, Zhao-Ning Lu, Gangcai Xie, Jean Y. H. Yang, Chong-Chao Wu, Xiao-Fang Cui, Kun-Yan He, Qing Luo, Yu-Lan Qu, Na Wang, Lan Wang, Ze-Guang Han. (2017) [Single-cell RNA-Seq analysis reveals dynamic trajectories during mouse liver development](https://doi.org/10.1186/s12864-017-4342-x), BMC Genomics.
+
+1. Li Yang, Wei‐Hua Wang, Wei‐Lin Qi, Zhen Guo, Erfei Bi, Cheng‐Ran Xu. (2017) [A single‐cell transcriptomic analysis reveals precise pathways and regulatory mechanisms underlying hepatoblast differentiation](https://doi.org/10.1002/hep.29353), Hepatology.

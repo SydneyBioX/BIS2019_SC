@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Sydney Precision Bioinformatics Group" />
+
+<meta name="date" content="2019-11-04" />
+
+<title>CPC workshop</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">SingleCellPlus - CPC</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="qc.html">QC Process</a>
+</li>
+<li>
+  <a href="scMerge.html">scMerge</a>
+</li>
+<li>
+  <a href="downstream.html">Downstream Analysis</a>
+</li>
+<li>
+  <a href="acknowledgement.html">Acknowledgement</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">CPC workshop</h1>
+<h4 class="author">Sydney Precision Bioinformatics Group</h4>
+<h4 class="date">04 November 2019</h4>
+
+</div>
+
+
+<div id="single-cell-plus" class="section level1">
+<h1>Single Cell Plus</h1>
+<p>This workshop is funded by “Single Cell Plus”, a research initiative between Hong Kong University and the University of Sydney.</p>
+</div>
+<div id="slides" class="section level1">
+<h1>Slides</h1>
+<p>You can find the workshop slides <a href="slides.pdf">here</a>.</p>
+</div>
+<div id="aim-of-this-workshop" class="section level1">
+<h1>Aim of this workshop</h1>
+<p>In this workshop we will focus on two mouse liver datasets to illustrate three critical topics in single-cell RNA-Seq analysis.</p>
+<ol style="list-style-type: decimal">
+<li>Quality control of sc-RNASeq data,</li>
+<li>The <code>scMerge</code> package for integrating multiple sc-RNASeq data,</li>
+<li>Some downstream analyses after <code>scMerge</code>.</li>
+</ol>
+<p>At the end of this workshop you should have some basic understanding of sc-RNASeq data and some key computational and statistical challenges of this type of data.</p>
+</div>
+<div id="prerequisites" class="section level1">
+<h1>Prerequisites</h1>
+<p>Ideally, you should be familiar with <code>R</code> and the Bioconductor. However, since this is not a programming workshop, you can still pick up important practical skills by running the codes we provided.</p>
+<div id="running-workshop-on-google-cloud" class="section level2">
+<h2>Running workshop on Google Cloud</h2>
+<p>Your instructor will provide you with the links to a Google Cloud server, username and the password. Once you log in, you will have access to RStudio via a webpage.</p>
+<p>Type the following code into your console and you are good to go!</p>
+<pre><code>source(&quot;/home/user_setup.R&quot;)</code></pre>
+</div>
+<div id="local" class="section level2">
+<h2>Running workshop locally</h2>
+<ol style="list-style-type: decimal">
+<li>Please download and install:</li>
+</ol>
+<ul>
+<li>Latest <code>R</code> from <a href="https://cloud.r-project.org/" class="uri">https://cloud.r-project.org/</a></li>
+<li>Latest <code>RStudio</code> from <a href="https://www.rstudio.com/products/rstudio/download/" class="uri">https://www.rstudio.com/products/rstudio/download/</a></li>
+</ul>
+<ol style="list-style-type: decimal">
+<li><p>In your RStudio console pane, please install all the necessary packages by running <a href="https://raw.githubusercontent.com/SydneyBioX/SC_CPC_workshop/master/install.R">this script</a>. This will take a while.</p></li>
+<li><p>Download all the the workshop materials from <a href="https://github.com/SydneyBioX/SC_CPC_workshop/archive/master.zip">this zip file</a> and unzip it on your Desktop. You should have a folder with the name <code>/desktop/SC_CPC_workshop-master</code> created.</p></li>
+<li><p>Download the data from <a href="https://storage.googleapis.com/scp_data/data.zip">this zip file</a> and unzip this file under <code>/desktop/SC_CPC_workshop-master</code>, so that you should have a folder created as <code>/desktop/SC_CPC_workshop-master/data</code>.</p></li>
+<li><p>Open up <code>/desktop/SC_CPC_workshop-master/SC_CPC_workshop.Rproj</code> and you should be able to run every <code>.Rmd</code> file in the workshop now.</p></li>
+</ol>
+</div>
+</div>
+<div id="clipboard" class="section level1">
+<h1>Clipboard</h1>
+<p>In some circumstances, we might need to share codes beyond the existing materials. Please click <a href="https://docs.google.com/document/d/136YffzxjkUM8RIGsnjD_yOkCTWw4Ijdwjy4_58nC-zc/edit?usp=sharing">here</a> to access these codes.</p>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<p><strong>Methodologies</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Cao Y., Lin Y., Ormerod, J.T., Yang, P., Yang, J., and Lo, K.K. (2019). scDC: Single cell differential composition analysis. Accepted by InCoB 2019.</p></li>
+<li><p>Geddes, T.A., Kim, T., Nan, L., Burchfield, J.G., Yang, J.Y.H., Tao, D., and Yang, P. (2019). Autoencoder-based cluster ensembles for single-cell RNA-seq data analysis. BioRxiv Accepted by InCoB 2019.</p></li>
+<li><p>Kim, T., Lo, K.K., Geddes, T.A., Kim H., Yang, J., and Yang, P. (2019) Accepted by InCoB 2019. scReClassify: post hoc cell type classification of single-cell RNA-seq data.</p></li>
+<li><p>Kim, T., Chen, I.R., Lin, Y., Wang, A.Y.-Y., Yang, J.Y.H., and Yang, P. (2019). <a href="https://doi.org/10.1093/bib/bby076">Impact of similarity metrics on single-cell RNA-seq data clustering</a>. Brief. Bioinform.</p></li>
+<li><p>Lin, Y., Ghazanfar, S., Wang, K.Y.X., Gagnon-Bartsch, J.A., Lo, K.K., Su, X., Han, Z.G., Ormerod, J.T., Speed, T.P., Yang, P., and Yang, J. (2019). <a href="http://www.pnas.org/lookup/doi/10.1073/pnas.1820006116">scMerge leverages factor analysis, stable expression, and pseudoreplication to merge multiple single-cell RNA-seq datasets</a>. Proc. Natl. Acad. Sci. U. S. A.</p></li>
+<li><p>Lin, Y., Ghazanfar, S., Strbenac, D., Wang, A., Patrick, E., Lin, D., Speed, T., Yang, J., and Yang, P. (2019). Evaluating stably expressed genes in single cells. GigaScience.</p></li>
+<li><p>Lin, Y., Cao Y., Kim H., Salim A., Speed T., Lin D., Yang P., Yang, J. (2019) scClassify: hierarchical classification of cells. BioRxiv</p></li>
+</ol>
+<p><strong>Data</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Xianbin Su, Yi Shi, Xin Zou, Zhao-Ning Lu, Gangcai Xie, Jean Y. H. Yang, Chong-Chao Wu, Xiao-Fang Cui, Kun-Yan He, Qing Luo, Yu-Lan Qu, Na Wang, Lan Wang, Ze-Guang Han. (2017) <a href="https://doi.org/10.1186/s12864-017-4342-x">Single-cell RNA-Seq analysis reveals dynamic trajectories during mouse liver development</a>, BMC Genomics.</p></li>
+<li><p>Li Yang, Wei‐Hua Wang, Wei‐Lin Qi, Zhen Guo, Erfei Bi, Cheng‐Ran Xu. (2017) <a href="https://doi.org/10.1002/hep.29353">A single‐cell transcriptomic analysis reveals precise pathways and regulatory mechanisms underlying hepatoblast differentiation</a>, Hepatology.</p></li>
+</ol>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
