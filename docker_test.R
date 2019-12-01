@@ -1,5 +1,5 @@
 # Running tests
-root_folder = "/home/CPC/"
+root_folder = "/home/gittmp/"
 setwd(root_folder)
 # (all_rmd = list.files(path = root_folder, pattern = "*Rmd",
 #                       full.names = TRUE))
