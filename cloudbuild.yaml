@@ -1,8 +1,8 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-m', '30g', '-t', 'gcr.io/scpworkshop/cpc:custom', '.']
+  args: ['build', '-m', '30g', '-t', 'gcr.io/scpworkshop/bis2019_sc:alpha', '.']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/scpworkshop/cpc:custom']
+  args: ['push', 'gcr.io/scpworkshop/bis2019_sc:alpha']
 options:
  machineType: 'N1_HIGHCPU_32'
 timeout: 7200s
