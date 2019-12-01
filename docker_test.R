@@ -16,4 +16,4 @@ start = Sys.time()
 rmarkdown::render_site(encoding = 'UTF-8')
 end = Sys.time()
 
-message("The test completed in ", round(end - start, 2), " mins! You are good to go!")
+message("The test completed in ", round(end - start, 2), " secs! You are good to go!")

@@ -1,20 +1,30 @@
-# docker run -e PASSWORD=pushu -e ROOT=TRUE -p 8787:8787 532cb5cec05a
+#!/bin/bash
+
+## docker run -e PASSWORD=pushu -e ROOT=TRUE -p 8787:8787 532cb5cec05a
 sudo apt-get update
-# sudo apt-get -y install r-base-dev
+## sudo apt-get -y install r-base-dev
 
 ## Make a tmp folder and git clone
-## All git files will then be copied to /home/SingleCellPlus/
-mkdir /home/tmp/
-git clone https://github.com/SydneyBioX/SC_CPC_workshop /home/tmp/
-mkdir /home/CPC
-cp -r /home/tmp/* /home/CPC/
-# We will remove these data since we will have another copy from Google Cloud Storage
-ls /home/
-ls /home/CPC/
-
+mkdir /home/gittmp/
+git clone https://github.com/SydneyBioX/BIS2019_SC /home/gittmp/
 ## wget all data files from Google Cloud Storage into /home/CPC/
-wget https://storage.googleapis.com/scp_data/data.zip -P /home/CPC/
-cd /home/CPC/ && unzip ./data.zip
-rm -rf /home/CPC/__MACOSX
+wget https://storage.googleapis.com/scp_data/data.zip -P /home/gittmp/
+cd /home/gittmp/ && unzip ./data.zip
+rm -rf /home/gittmp/__MACOSX
+rm -rf /home/gittmp/data.zip
 ls /home/
-ls /home/CPC/
+ls /home/gittmp/
+
+## Set up users
+
+sudo groupadd trainees
+
+for((userIndex = 1; userIndex <= 50; userIndex++))
+  do
+{
+  userID=user${userIndex}
+  sudo useradd -g trainees -d /home/$userID -m -s /bin/bash $userID
+  sudo cp -r /home/gittmp/* /home/$userID/
+  echo $userID:2019 | sudo chpasswd
+}
+done
