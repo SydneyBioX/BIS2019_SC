@@ -11,10 +11,11 @@ output: html_document
 
 + The workshop is developed/adviced from the following members of the Sydney Precision Bioinformatics Group (in alphabetical order)
   
-    * [Ms. Yue Cao](https://sydney.edu.au/science/people/yue.cao.644.php)
-    * [Ms. Hani Kim](https://sydney.edu.au/science/people/hani.kim.916.php)
-    * [Mr. Taiyun Kim](https://sydney.edu.au/science/people/taiyun.kim.811.php)
-    * [Ms. Yingxin Lin](https://sydney.edu.au/science/people/yingxin.lin.562.php)
+    * [Ms. Yue Cao](https://sydney.edu.au/science/about/our-people/research-students/yue-cao-644.html)
+    * [Dr. Shila Ghazanfar](https://www.cruk.cam.ac.uk/author/shila-ghazanfar)
+    * [Ms. Hani Kim](http://www.maths.usyd.edu.au/ut/people?who=JH_Kim&sms=m&personsearch%3DGo+to+person%27s+page)
+    * [Mr. Taiyun Kim]()
+    * [Ms. Yingxin Lin](https://yingxinlin.github.io)
     * [Dr. Kitty Lo](https://sydney.edu.au/science/people/kitty.lo.php)
     * [Mr. Kevin Wang](https://sydney.edu.au/science/people/kevin.wang.php)
     * [Prof. Jean Yang](https://sydney.edu.au/science/people/jean.yang.php)

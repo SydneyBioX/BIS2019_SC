@@ -1,5 +1,5 @@
-# CPC Single Cell Workshop
+# BioInfoSummer 2019 workshop: Single Cell RNA-seq Analysis
 
-To be held on 04 November, 2019. 
+To be held on 04 December, 2019. 
 
-Please visit: https://sydneybiox.github.io/SC_CPC_workshop/
+Please visit: https://sydneybiox.github.io/BIS2019_SC/
