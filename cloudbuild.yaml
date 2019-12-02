@@ -5,4 +5,4 @@ steps:
   args: ['push', 'gcr.io/scpworkshop/bis2019_sc:alpha']
 options:
  machineType: 'N1_HIGHCPU_32'
-timeout: 7200s
+timeout: 9600s

@@ -1,7 +1,7 @@
 ---
-title: "CPC workshop"
+title: "BioInfoSummer workshop: Single Cell RNA-seq Analysis"
 author: "Sydney Precision Bioinformatics Group"
-date: "04 November 2019"
+date: "04 December 2019"
 output:
   html_document:
     css: style.css
@@ -48,13 +48,13 @@ source("/home/user_setup.R")
   + Latest `RStudio` from https://www.rstudio.com/products/rstudio/download/
   
   
-  1. In your RStudio console pane, please install all the necessary packages by running [this script](https://raw.githubusercontent.com/SydneyBioX/SC_CPC_workshop/master/install.R). This will take a while. 
+  1. In your RStudio console pane, please install all the necessary packages by running [this script](https://raw.githubusercontent.com/SydneyBioX/BIS2019_SC/master/install.R). This will take a while. 
 
-  1. Download all the the workshop materials from [this zip file](https://github.com/SydneyBioX/SC_CPC_workshop/archive/master.zip) and unzip it on your Desktop. You should have a folder with the name `/desktop/SC_CPC_workshop-master` created.
+  1. Download all the the workshop materials from [this zip file](https://github.com/SydneyBioX/BIS2019_SC/archive/master.zip) and unzip it on your Desktop. You should have a folder with the name `/desktop/BIS2019_SC-master` created.
   
-  1. Download the data from [this zip file](https://storage.googleapis.com/scp_data/data.zip) and unzip this file under `/desktop/SC_CPC_workshop-master`, so that you should have a folder created as `/desktop/SC_CPC_workshop-master/data`. 
+  1. Download the data from [this zip file](https://storage.googleapis.com/scp_data/data.zip) and unzip this file under `/desktop/BIS2019_SC-master`, so that you should have a folder created as `/desktop/BIS2019_SC-master/data`. 
   
-  1. Open up `/desktop/SC_CPC_workshop-master/SC_CPC_workshop.Rproj` and you should be able to run every `.Rmd` file in the workshop now. 
+  1. Open up `/desktop/SC_CPC_workshop-master/BIS2019_SC.Rproj` and you should be able to run every `.Rmd` file in the workshop now. 
 
 
 # Clipboard
