@@ -2,22 +2,25 @@ library(googleComputeEngineR)
 
 project = "scpworkshop"
 gce_global_project(project)
-gce_global_zone("us-central1-a")
+
 
 ## see gce_list_machinetype() for options of predefined_type
 (tag = "gcr.io/scpworkshop/bis2019_sc:alpha")
 
-# vm <- gce_vm(template = "rstudio",
-#              name = "sc-config",
-#              disk_size_gb = 300,
-#              predefined_type = "n1-standard-2",
-#              dynamic_image = tag,
-#              user = "rstudio",
-#              password = Sys.getenv("DOCKER_PWD"))
 
-vm <- gce_vm(template = "rstudio",
-             name = "sc",
-             disk_size_gb = 300,
+gce_global_zone("us-central1-a")
+vm1 <- gce_vm(template = "rstudio",
+             name = "sc1",
+             disk_size_gb = 500,
+             predefined_type = "n1-standard-32",
+             dynamic_image = tag,
+             user = "rstudio",
+             password = Sys.getenv("DOCKER_PWD"))
+
+gce_global_zone("us-west2-a")
+vm2 <- gce_vm(template = "rstudio",
+             name = "sc2",
+             disk_size_gb = 500,
              predefined_type = "n1-standard-32",
              dynamic_image = tag,
              user = "rstudio",
