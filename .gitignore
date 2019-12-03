@@ -36,3 +36,4 @@ vignettes/*.pdf
 rsconnect/
 data
 SC_CPC_workshop_deploy
+.Rproj.user

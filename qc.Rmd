@@ -1,7 +1,7 @@
 ---
 title: "QC of single cell data"
 author: "Sydney Precision Bioinformatics Group"
-date: "04 November 2019"
+date: "04 December 2019"
 output:
   html_document:
     css: style.css
@@ -372,7 +372,7 @@ e115_liver_percent %>%
 
 
 
-# Filtering
+# Cell Filtering
 
 Here we will give a demonstration of how you can remove some of the cells from the dataset.
 
@@ -387,14 +387,25 @@ dim(liver_new)
 
 Recall in the mitochondiral plot, we have identified cells with a mitochondrial percentage greater than 10% as cells that we should remove. Thus, we will subset the data on the columns to retain those cells with a mitochondrial percentage less or equal to 10%.
 
-Finally we should check that the dimension of the dataset is correct after filtering.
-
-```{r, eval = FALSE}
+```{r}
 dim(liver)
 liver_new2 = liver[, barcode_data$total >= barcode@metadata$inflection & mito_plotdf_full$mito_percent <= 10]
 dim(liver_new2)
 ```
 
+# Gene Filtering
+
+
+Lastly in the quality control step, we will perform quality control from the gene persepctive, to filter out the genes that are expressed in less than 10 cells.
+
+
+Finally we should check that the dimension of the dataset is correct after filtering.
+
+```{r}
+num_cell_expressed = rowSums(liver_new2 > 0)
+liver_new3 = liver_new2[num_cell_expressed > 10, ]
+dim(liver_new3)
+```
 
 
 # Session Info

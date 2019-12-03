@@ -12,7 +12,7 @@
 
 <meta name="author" content="Sydney Precision Bioinformatics Group" />
 
-<meta name="date" content="2019-11-04" />
+<meta name="date" content="2019-12-04" />
 
 <title>QC of single cell data</title>
 
@@ -385,7 +385,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">QC of single cell data</h1>
 <h4 class="author">Sydney Precision Bioinformatics Group</h4>
-<h4 class="date">04 November 2019</h4>
+<h4 class="date">04 December 2019</h4>
 
 </div>
 
@@ -700,8 +700,8 @@ e115_liver_percent %&gt;%
 <!--   theme(legend.position = "none") -->
 <!-- ``` -->
 </div>
-<div id="filtering" class="section level1">
-<h1><span class="header-section-number">8</span> Filtering</h1>
+<div id="cell-filtering" class="section level1">
+<h1><span class="header-section-number">8</span> Cell Filtering</h1>
 <p>Here we will give a demonstration of how you can remove some of the cells from the dataset.</p>
 <p>In the <code>DropletUtils</code> package, it was recommended that we should only retain those cells above the inflection point in the plot. So we will perform subsetiting on the cells (columns) of this data.</p>
 <pre class="r"><code>table(barcode_data$total &gt;= barcode@metadata$inflection)</code></pre>
@@ -712,13 +712,23 @@ e115_liver_percent %&gt;%
 dim(liver_new)</code></pre>
 <pre><code>## [1] 37766   504</code></pre>
 <p>Recall in the mitochondiral plot, we have identified cells with a mitochondrial percentage greater than 10% as cells that we should remove. Thus, we will subset the data on the columns to retain those cells with a mitochondrial percentage less or equal to 10%.</p>
-<p>Finally we should check that the dimension of the dataset is correct after filtering.</p>
-<pre class="r"><code>dim(liver)
-liver_new2 = liver[, barcode_data$total &gt;= barcode@metadata$inflection &amp; mito_plotdf_full$mito_percent &lt;= 10]
+<pre class="r"><code>dim(liver)</code></pre>
+<pre><code>## [1] 37766   507</code></pre>
+<pre class="r"><code>liver_new2 = liver[, barcode_data$total &gt;= barcode@metadata$inflection &amp; mito_plotdf_full$mito_percent &lt;= 10]
 dim(liver_new2)</code></pre>
+<pre><code>## [1] 37766   437</code></pre>
+</div>
+<div id="gene-filtering" class="section level1">
+<h1><span class="header-section-number">9</span> Gene Filtering</h1>
+<p>Lastly in the quality control step, we will perform quality control from the gene persepctive, to filter out the genes that are expressed in less than 10 cells.</p>
+<p>Finally we should check that the dimension of the dataset is correct after filtering.</p>
+<pre class="r"><code>num_cell_expressed = rowSums(liver_new2 &gt; 0)
+liver_new3 = liver_new2[num_cell_expressed &gt; 10, ]
+dim(liver_new3)</code></pre>
+<pre><code>## [1] 22308   437</code></pre>
 </div>
 <div id="session-info" class="section level1">
-<h1><span class="header-section-number">9</span> Session Info</h1>
+<h1><span class="header-section-number">10</span> Session Info</h1>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.6.1 (2019-07-05)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
