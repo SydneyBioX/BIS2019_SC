@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -239,6 +238,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -270,6 +270,12 @@ $(document).ready(function () {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -491,8 +497,8 @@ sce_list</code></pre>
 ## dim: 23355 389 
 ## metadata(1): log.exprs.offset
 ## assays(3): counts log2cpm logcounts
-## rownames(23355): ENSMUSG00000104017 ENSMUSG00000102331 ...
-##   ERCC-00170 ERCC-00171
+## rownames(23355): ENSMUSG00000104017 ENSMUSG00000102331 ... ERCC-00170
+##   ERCC-00171
 ## rowData names(9): is_feature_control is_feature_control_ERCC ...
 ##   total_counts log10_total_counts
 ## colnames(389): E11.5_C07 E11.5_C44 ... E16.5_2_C63 E16.5_2_C89
@@ -507,12 +513,11 @@ sce_list</code></pre>
 ## dim: 17215 448 
 ## metadata(1): log.exprs.offset
 ## assays(3): counts log2cpm logcounts
-## rownames(17215): ENSMUSG00000000001 ENSMUSG00000000028 ...
-##   ERCC-00170 ERCC-00171
+## rownames(17215): ENSMUSG00000000001 ENSMUSG00000000028 ... ERCC-00170
+##   ERCC-00171
 ## rowData names(9): is_feature_control is_feature_control_ERCC ...
 ##   total_counts log10_total_counts
-## colnames(448): E10.5D_1_01 E10.5D_1_02 ... E17.5E_4_16
-##   E17.5E_4_16.1
+## colnames(448): E10.5D_1_01 E10.5D_1_02 ... E17.5E_4_16 E17.5E_4_16.1
 ## colData names(33): stage batch ... pct_counts_top_50_features_ERCC
 ##   is_cell_control
 ## reducedDimNames(0):
@@ -528,8 +533,8 @@ sce_list</code></pre>
 ## dim: 23801 837 
 ## metadata(0):
 ## assays(2): counts logcounts
-## rownames(23801): ENSMUSG00000104017 ENSMUSG00000102331 ...
-##   ERCC-00158 ERCC-00164
+## rownames(23801): ENSMUSG00000104017 ENSMUSG00000102331 ... ERCC-00158
+##   ERCC-00164
 ## rowData names(0):
 ## colnames(837): E11.5_C07 E11.5_C44 ... E17.5E_4_16 E17.5E_4_16.1
 ## colData names(3): cellTypes stage batch
@@ -635,7 +640,6 @@ scMerge_supervised = scMerge(
   replicate_prop = 1,
   assay_name = &quot;scMerge_supervised&quot;,
   verbose = TRUE)</code></pre>
-<pre><code>## Step 1: Computation will run in serial</code></pre>
 <pre><code>## Performing supervised scMerge with: 
 ##  1. Cell type information 
 ##  2. No cell type indices 
@@ -650,8 +654,8 @@ scMerge_supervised = scMerge(
 ## dim: 23801 837 
 ## metadata(5): ruvK ruvK_optimal scRep_res timeReplicates timeRuv
 ## assays(3): counts logcounts scMerge_supervised
-## rownames(23801): ENSMUSG00000104017 ENSMUSG00000102331 ...
-##   ERCC-00158 ERCC-00164
+## rownames(23801): ENSMUSG00000104017 ENSMUSG00000102331 ... ERCC-00158
+##   ERCC-00164
 ## rowData names(0):
 ## colnames(837): E11.5_C07 E11.5_C44 ... E17.5E_4_16 E17.5E_4_16.1
 ## colData names(3): cellTypes stage batch
@@ -688,10 +692,9 @@ ggpubr::ggarrange(tsne_scMerge_supervised_cellTypes,
   replicate_prop = 1,
   assay_name = &quot;scMerge_unsupervised&quot;,
   verbose = TRUE)</code></pre>
-<pre><code>## Step 1: Computation will run in serial</code></pre>
 <pre><code>## Performing unsupervised scMerge with: 
 ##  1. No cell type information 
-##  2. Cell type indices not revelant here 
+##  2. Cell type indices not relevant here 
 ##  3. Mutual nearest neighbour matching 
 ##  4. No supplied marker and no supplied marker_list for MNN clustering 
 ##     Finding Highly Variable Genes for clustering 
@@ -717,8 +720,8 @@ ggpubr::ggarrange(tsne_scMerge_supervised_cellTypes,
 ## dim: 23801 837 
 ## metadata(5): ruvK ruvK_optimal scRep_res timeReplicates timeRuv
 ## assays(3): counts logcounts scMerge_unsupervised
-## rownames(23801): ENSMUSG00000104017 ENSMUSG00000102331 ...
-##   ERCC-00158 ERCC-00164
+## rownames(23801): ENSMUSG00000104017 ENSMUSG00000102331 ... ERCC-00158
+##   ERCC-00164
 ## rowData names(0):
 ## colnames(837): E11.5_C07 E11.5_C44 ... E17.5E_4_16 E17.5E_4_16.1
 ## colData names(3): cellTypes stage batch
@@ -757,10 +760,9 @@ ggpubr::ggarrange(tsne_scMerge_unsupervised_cellTypes,
   WV_marker = c(&quot;ENSMUSG00000045394&quot;,&quot;ENSMUSG00000054932&quot;,&quot;ENSMUSG00000045394&quot;),
   assay_name = &quot;scMerge_semisupervised&quot;,
   verbose = TRUE)</code></pre>
-<pre><code>## Step 1: Computation will run in serial</code></pre>
 <pre><code>## Performing unsupervised scMerge with: 
 ##  1. No cell type information 
-##  2. Cell type indices not revelant here 
+##  2. Cell type indices not relevant here 
 ##  3. Mutual nearest neighbour matching 
 ##  4. No supplied marker and no supplied marker_list for MNN clustering 
 ##     Finding Highly Variable Genes for clustering 
@@ -789,8 +791,8 @@ ggpubr::ggarrange(tsne_scMerge_unsupervised_cellTypes,
 ## dim: 23801 837 
 ## metadata(5): ruvK ruvK_optimal scRep_res timeReplicates timeRuv
 ## assays(3): counts logcounts scMerge_semisupervised
-## rownames(23801): ENSMUSG00000104017 ENSMUSG00000102331 ...
-##   ERCC-00158 ERCC-00164
+## rownames(23801): ENSMUSG00000104017 ENSMUSG00000102331 ... ERCC-00158
+##   ERCC-00164
 ## rowData names(0):
 ## colnames(837): E11.5_C07 E11.5_C44 ... E17.5E_4_16 E17.5E_4_16.1
 ## colData names(3): cellTypes stage batch
@@ -881,107 +883,80 @@ ggpubr::ggarrange(tsne_scMerge_fast_cellTypes, tsne_scMerge_fast_batch, ncol = 2
 ##  [8] datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] tidyr_1.0.0                 scater_1.13.18             
-##  [3] scMerge_1.1.5               forcats_0.4.0              
-##  [5] stringr_1.4.0               scales_1.0.0               
-##  [7] DropletUtils_1.4.3          scClassify_0.2.0           
-##  [9] monocle_2.12.0              DDRTree_0.1.5              
-## [11] irlba_2.3.3                 VGAM_1.1-1                 
+##  [1] tidyr_1.0.0                 scater_1.14.4              
+##  [3] scMerge_1.2.0               forcats_0.4.0              
+##  [5] stringr_1.4.0               scales_1.1.0               
+##  [7] DropletUtils_1.6.1          scClassify_0.2.0           
+##  [9] monocle_2.14.0              DDRTree_0.1.5              
+## [11] irlba_2.3.3                 VGAM_1.1-2                 
 ## [13] Matrix_1.2-17               plyr_1.8.4                 
-## [15] ggpubr_0.2.2                magrittr_1.5               
+## [15] ggpubr_0.2.4                magrittr_1.5               
 ## [17] viridis_0.5.1               viridisLite_0.3.0          
-## [19] MAST_1.10.0                 ggplot2_3.2.1              
+## [19] MAST_1.12.0                 ggplot2_3.2.1              
 ## [21] cluster_2.1.0               Rtsne_0.15                 
 ## [23] mclust_5.4.5                scdney_0.1.5               
-## [25] edgeR_3.26.7                limma_3.40.6               
-## [27] dplyr_0.8.3                 SingleCellExperiment_1.7.7 
-## [29] SummarizedExperiment_1.15.9 DelayedArray_0.11.8        
-## [31] BiocParallel_1.18.1         matrixStats_0.55.0         
-## [33] Biobase_2.44.0              GenomicRanges_1.36.1       
-## [35] GenomeInfoDb_1.20.0         IRanges_2.19.17            
-## [37] S4Vectors_0.23.25           BiocGenerics_0.31.6        
+## [25] edgeR_3.28.0                limma_3.42.0               
+## [27] dplyr_0.8.3                 SingleCellExperiment_1.8.0 
+## [29] SummarizedExperiment_1.16.0 DelayedArray_0.12.0        
+## [31] BiocParallel_1.20.0         matrixStats_0.55.0         
+## [33] Biobase_2.46.0              GenomicRanges_1.38.0       
+## [35] GenomeInfoDb_1.22.0         IRanges_2.20.1             
+## [37] S4Vectors_0.24.1            BiocGenerics_0.32.0        
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] ModelMetrics_1.2.2       R.methodsS3_1.7.1       
-##   [3] acepack_1.4.1            knitr_1.24              
-##   [5] R.utils_2.9.0            data.table_1.12.2       
-##   [7] rpart_4.1-15             RCurl_1.95-4.12         
-##   [9] doParallel_1.0.15        generics_0.0.2          
-##  [11] snow_0.4-3               cowplot_1.0.0           
-##  [13] mice_3.6.0               RANN_2.6.1              
-##  [15] combinat_0.0-8           proxy_0.4-23            
-##  [17] lubridate_1.7.4          assertthat_0.2.1        
-##  [19] gower_0.2.1              amap_0.8-17             
-##  [21] xfun_0.9                 evaluate_0.14           
-##  [23] fansi_0.4.0              caTools_1.17.1.2        
-##  [25] dendextend_1.12.0        igraph_1.2.4.1          
-##  [27] htmlwidgets_1.5.1        sparsesvd_0.2           
-##  [29] purrr_0.3.2              ellipsis_0.3.0          
-##  [31] backports_1.1.5          RcppParallel_4.4.3      
-##  [33] vctrs_0.2.0              abind_1.4-5             
-##  [35] caret_6.0-84             RcppEigen_0.3.3.5.0     
-##  [37] withr_2.1.2              ggforce_0.3.1           
-##  [39] checkmate_1.9.4          segmented_1.0-0         
-##  [41] lazyeval_0.2.2           crayon_1.3.4            
-##  [43] recipes_0.1.6            pkgconfig_2.0.3         
-##  [45] slam_0.1-46              labeling_0.3            
-##  [47] tweenr_1.0.1             vipor_0.4.5             
-##  [49] nlme_3.1-141             hopach_2.44.0           
-##  [51] blme_1.0-4               nnet_7.3-12             
-##  [53] rlang_0.4.0              diptest_0.75-7          
-##  [55] lifecycle_0.1.0          mitml_0.3-7             
-##  [57] doSNOW_1.0.18            rsvd_1.0.2              
-##  [59] randomForest_4.6-14      polyclip_1.10-0         
-##  [61] Rhdf5lib_1.6.0           boot_1.3-23             
-##  [63] beeswarm_0.2.3           pan_1.6                 
-##  [65] base64enc_0.1-3          ggridges_0.5.1          
-##  [67] pheatmap_1.0.12          bitops_1.0-6            
-##  [69] R.oo_1.22.0              KernSmooth_2.23-15      
-##  [71] DelayedMatrixStats_1.7.2 ggsignif_0.6.0          
-##  [73] gplots_3.0.1.1           gdata_2.18.0            
-##  [75] zlibbioc_1.30.0          compiler_3.6.1          
-##  [77] HSMMSingleCell_1.4.0     dqrng_0.2.1             
-##  [79] bbmle_1.0.20             RColorBrewer_1.1-2      
-##  [81] lme4_1.1-21              cli_1.1.0               
-##  [83] XVector_0.24.0           htmlTable_1.13.1        
-##  [85] Formula_1.2-3            MASS_7.3-51.4           
-##  [87] mgcv_1.8-28              tidyselect_0.2.5        
-##  [89] stringi_1.4.3            highr_0.8               
-##  [91] densityClust_0.3         yaml_2.2.0              
-##  [93] BiocSingular_1.0.0       locfit_1.5-9.1          
-##  [95] latticeExtra_0.6-28      ggrepel_0.8.1           
-##  [97] pbmcapply_1.5.0          grid_3.6.1              
-##  [99] manipulate_1.0.1         tools_3.6.1             
-## [101] ruv_0.9.7.1              rstudioapi_0.10         
-## [103] foreach_1.4.7            foreign_0.8-72          
-## [105] gridExtra_2.3            prodlim_2018.04.18      
-## [107] farver_1.1.0             ggraph_2.0.0            
-## [109] proxyC_0.1.5             digest_0.6.21           
-## [111] FNN_1.1.3                lava_1.6.6              
-## [113] qlcMatrix_0.9.7          Rcpp_1.0.2              
-## [115] broom_0.5.2              minpack.lm_1.2-1        
-## [117] colorspace_1.4-1         reldist_1.6-6           
-## [119] statmod_1.4.32           expm_0.999-4            
-## [121] graphlayouts_0.5.0       nloptr_1.2.1            
-## [123] tidygraph_1.1.2          timeDate_3043.102       
-## [125] M3Drop_1.10.0            zeallot_0.1.0           
-## [127] ipred_0.9-9              R6_2.4.0                
-## [129] clusteval_0.1            Hmisc_4.2-0             
-## [131] pillar_1.4.2             htmltools_0.4.0         
-## [133] glue_1.3.1               minqa_1.2.4             
-## [135] BiocNeighbors_1.2.0      class_7.3-15            
-## [137] codetools_0.2-16         jomo_2.6-9              
-## [139] mvtnorm_1.0-11           utf8_1.1.4              
-## [141] lattice_0.20-38          tibble_2.1.3            
-## [143] mixtools_1.1.0           numDeriv_2016.8-1.1     
-## [145] ggbeeswarm_0.6.0         DescTools_0.99.28       
-## [147] gtools_3.8.1             survival_2.44-1.1       
-## [149] rmarkdown_1.15           docopt_0.6.1            
-## [151] fastICA_1.2-2            munsell_0.5.0           
-## [153] e1071_1.7-2              rhdf5_2.28.0            
-## [155] GenomeInfoDbData_1.2.1   iterators_1.0.12        
-## [157] HDF5Array_1.12.2         reshape2_1.4.3          
-## [159] gtable_0.3.0</code></pre>
+##   [1] ModelMetrics_1.2.2       R.methodsS3_1.7.1        acepack_1.4.1           
+##   [4] knitr_1.26               R.utils_2.9.0            data.table_1.12.6       
+##   [7] rpart_4.1-15             RCurl_1.95-4.12          doParallel_1.0.15       
+##  [10] generics_0.0.2           snow_0.4-3               cowplot_1.0.0           
+##  [13] mice_3.6.0               RANN_2.6.1               combinat_0.0-8          
+##  [16] proxy_0.4-23             lubridate_1.7.4          assertthat_0.2.1        
+##  [19] gower_0.2.1              amap_0.8-17              xfun_0.11               
+##  [22] evaluate_0.14            fansi_0.4.0              caTools_1.17.1.3        
+##  [25] dendextend_1.13.2        igraph_1.2.4.2           htmlwidgets_1.5.1       
+##  [28] sparsesvd_0.2            purrr_0.3.3              ellipsis_0.3.0          
+##  [31] backports_1.1.5          RcppParallel_4.4.4       vctrs_0.2.0             
+##  [34] abind_1.4-5              caret_6.0-84             withr_2.1.2             
+##  [37] ggforce_0.3.1            sfsmisc_1.1-4            checkmate_1.9.4         
+##  [40] segmented_1.0-0          lazyeval_0.2.2           crayon_1.3.4            
+##  [43] recipes_0.1.7            pkgconfig_2.0.3          slam_0.1-46             
+##  [46] labeling_0.3             tweenr_1.0.1             vipor_0.4.5             
+##  [49] nlme_3.1-141             hopach_2.46.0            nnet_7.3-12             
+##  [52] rlang_0.4.2              diptest_0.75-7           lifecycle_0.1.0         
+##  [55] mitml_0.3-7              startupmsg_0.9.6         doSNOW_1.0.18           
+##  [58] rsvd_1.0.2               randomForest_4.6-14      polyclip_1.10-0         
+##  [61] Rhdf5lib_1.8.0           boot_1.3-23              beeswarm_0.2.3          
+##  [64] pan_1.6                  base64enc_0.1-3          ggridges_0.5.1          
+##  [67] pheatmap_1.0.12          bitops_1.0-6             R.oo_1.23.0             
+##  [70] KernSmooth_2.23-15       DelayedMatrixStats_1.8.0 ggsignif_0.6.0          
+##  [73] gplots_3.0.1.1           gdata_2.18.0             zlibbioc_1.32.0         
+##  [76] compiler_3.6.1           HSMMSingleCell_1.6.0     dqrng_0.2.1             
+##  [79] bbmle_1.0.20             RColorBrewer_1.1-2       lme4_1.1-21             
+##  [82] cli_1.1.0                XVector_0.26.0           htmlTable_1.13.2        
+##  [85] Formula_1.2-3            MASS_7.3-51.4            mgcv_1.8-28             
+##  [88] tidyselect_0.2.5         stringi_1.4.3            highr_0.8               
+##  [91] densityClust_0.3         yaml_2.2.0               BiocSingular_1.2.0      
+##  [94] locfit_1.5-9.1           latticeExtra_0.6-28      ggrepel_0.8.1           
+##  [97] pbmcapply_1.5.0          grid_3.6.1               tools_3.6.1             
+## [100] ruv_0.9.7.1              rstudioapi_0.10          foreach_1.4.7           
+## [103] foreign_0.8-72           gridExtra_2.3            prodlim_2019.11.13      
+## [106] farver_2.0.1             ggraph_2.0.0             proxyC_0.1.5            
+## [109] digest_0.6.23            distr_2.8.0              FNN_1.1.3               
+## [112] lava_1.6.6               qlcMatrix_0.9.7          Rcpp_1.0.3              
+## [115] broom_0.5.2              minpack.lm_1.2-1         colorspace_1.4-1        
+## [118] reldist_1.6-6            statmod_1.4.32           expm_0.999-4            
+## [121] graphlayouts_0.5.0       nloptr_1.2.1             tidygraph_1.1.2         
+## [124] timeDate_3043.102        M3Drop_1.12.0            zeallot_0.1.0           
+## [127] ipred_0.9-9              R6_2.4.1                 clusteval_0.1           
+## [130] Hmisc_4.3-0              pillar_1.4.2             htmltools_0.4.0         
+## [133] glue_1.3.1               minqa_1.2.4              BiocNeighbors_1.4.1     
+## [136] class_7.3-15             codetools_0.2-16         jomo_2.6-10             
+## [139] mvtnorm_1.0-11           utf8_1.1.4               lattice_0.20-38         
+## [142] tibble_2.1.3             mixtools_1.1.0           numDeriv_2016.8-1.1     
+## [145] ggbeeswarm_0.6.0         DescTools_0.99.31        gtools_3.8.1            
+## [148] survival_2.44-1.1        rmarkdown_1.18           docopt_0.6.1            
+## [151] fastICA_1.2-2            munsell_0.5.0            e1071_1.7-3             
+## [154] rhdf5_2.30.1             GenomeInfoDbData_1.2.2   iterators_1.0.12        
+## [157] HDF5Array_1.14.1         reshape2_1.4.3           gtable_0.3.0</code></pre>
 </div>
 
 

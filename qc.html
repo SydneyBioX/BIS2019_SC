@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -239,6 +238,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -270,6 +270,12 @@ $(document).ready(function () {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -403,6 +409,7 @@ library(scales)
 library(ggpubr)
 library(stringr)
 library(forcats)
+library(SingleCellExperiment)
 
 theme_set(theme_classic(16))</code></pre>
 </div>
@@ -727,8 +734,66 @@ liver_new3 = liver_new2[num_cell_expressed &gt; 10, ]
 dim(liver_new3)</code></pre>
 <pre><code>## [1] 22308   437</code></pre>
 </div>
-<div id="session-info" class="section level1">
-<h1><span class="header-section-number">10</span> Session Info</h1>
+<div id="create-singlecellexperiment" class="section level1">
+<h1><span class="header-section-number">10</span> Create <code>SingleCellExperiment</code></h1>
+<p>For further single cell data analysis, we will create a <code>SingleCellExperiment</code> object using our filtered count matrix.</p>
+<pre class="r"><code>liver_sce = SingleCellExperiment::SingleCellExperiment(assay = list(counts = as.matrix(liver_new3)))
+liver_sce</code></pre>
+<pre><code>## class: SingleCellExperiment 
+## dim: 22308 437 
+## metadata(0):
+## assays(1): counts
+## rownames(22308): ENSMUSG00000102331 ENSMUSG00000025902 ... ERCC-00170
+##   ERCC-00171
+## rowData names(0):
+## colnames(437): E11.5_C01 E11.5_C03 ... P2.5_C81 P2.5_C83
+## colData names(0):
+## reducedDimNames(0):
+## spikeNames(0):
+## altExpNames(0):</code></pre>
+<p>Noted that this experiment contains the spike-ins transcripts. We can use <code>splitAltExp</code> to remove the corresponding rows (Genes start with “ERCC-”) from the main <code>SingleCellExperiment</code>, and stored these rows into a nested alternative Experiment (<code>altExp()</code>).</p>
+<pre class="r"><code>is_spike = grepl(&quot;^ERCC-&quot;, rownames(liver_sce))
+liver_sce = splitAltExps(liver_sce, ifelse(is_spike, &quot;ERCC&quot;, &quot;gene&quot;))
+altExpNames(liver_sce)</code></pre>
+<pre><code>## [1] &quot;ERCC&quot;</code></pre>
+<pre class="r"><code>altExp(liver_sce)</code></pre>
+<pre><code>## class: SingleCellExperiment 
+## dim: 47 437 
+## metadata(0):
+## assays(1): counts
+## rownames(47): ERCC-00002 ERCC-00003 ... ERCC-00170 ERCC-00171
+## rowData names(0):
+## colnames(437): E11.5_C01 E11.5_C03 ... P2.5_C81 P2.5_C83
+## colData names(0):
+## reducedDimNames(0):
+## spikeNames(0):
+## altExpNames(0):</code></pre>
+<p>Lastly in this preprocessing tutorial, we will perform log-transformation for the counts matrix and store the normalised matrix as <code>logcounts</code> in Assays.</p>
+<pre class="r"><code>liver_counts &lt;- counts(liver_sce)
+lib_sizes &lt;- colSums(liver_counts)
+size_factors &lt;- lib_sizes/mean(lib_sizes)
+logcounts(liver_sce) &lt;- log2(t(t(liver_counts)/size_factors) + 1)
+assayNames(liver_sce)</code></pre>
+<pre><code>## [1] &quot;counts&quot;    &quot;logcounts&quot;</code></pre>
+<pre class="r"><code>liver_sce</code></pre>
+<pre><code>## class: SingleCellExperiment 
+## dim: 22261 437 
+## metadata(0):
+## assays(2): counts logcounts
+## rownames(22261): ENSMUSG00000102331 ENSMUSG00000025902 ...
+##   ENSMUSG00000064371 ENSMUSG00000064372
+## rowData names(0):
+## colnames(437): E11.5_C01 E11.5_C03 ... P2.5_C81 P2.5_C83
+## colData names(0):
+## reducedDimNames(0):
+## spikeNames(0):
+## altExpNames(1): ERCC</code></pre>
+</div>
+<div id="reference" class="section level1">
+<h1><span class="header-section-number">11</span> Reference</h1>
+<p>Aaron Lun and Davide Risso (2019). SingleCellExperiment: S4 Classes for Single Cell Data. R package version 1.7.7.</p>
+<p>Lun ATL, Riesenfeld S, Andrews T, Dao T, Gomes T, participants in the 1st Human Cell Atlas Jamboree, Marioni JC (2019). “EmptyDrops: distinguishing cells from empty droplets in droplet-based single-cell RNA sequencing data.” <em>Genome Biol.</em>, <em>20</em>, 63. doi: 10.1186/s13059-019-1662-y (URL: <a href="https://doi.org/10.1186/s13059-019-1662-y" class="uri">https://doi.org/10.1186/s13059-019-1662-y</a>).</p>
+<p>Griffiths JA, Richard AC, Bach K, Lun ATL, Marioni JC (2018). “Detection and removal of barcode swapping in single-cell RNA-seq data.” <em>Nat. Commun.</em>, <em>9</em>(1), 2667. doi: 10.1038/s41467-018-05083-x (URL: <a href="https://doi.org/10.1038/s41467-018-05083-x" class="uri">https://doi.org/10.1038/s41467-018-05083-x</a>). # Session Info</p>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.6.1 (2019-07-05)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
@@ -747,23 +812,23 @@ dim(liver_new3)</code></pre>
 ## 
 ## other attached packages:
 ##  [1] forcats_0.4.0               stringr_1.4.0              
-##  [3] scales_1.0.0                DropletUtils_1.4.3         
-##  [5] scClassify_0.2.0            monocle_2.12.0             
+##  [3] scales_1.1.0                DropletUtils_1.6.1         
+##  [5] scClassify_0.2.0            monocle_2.14.0             
 ##  [7] DDRTree_0.1.5               irlba_2.3.3                
-##  [9] VGAM_1.1-1                  Matrix_1.2-17              
-## [11] plyr_1.8.4                  ggpubr_0.2.2               
+##  [9] VGAM_1.1-2                  Matrix_1.2-17              
+## [11] plyr_1.8.4                  ggpubr_0.2.4               
 ## [13] magrittr_1.5                viridis_0.5.1              
-## [15] viridisLite_0.3.0           MAST_1.10.0                
+## [15] viridisLite_0.3.0           MAST_1.12.0                
 ## [17] ggplot2_3.2.1               cluster_2.1.0              
 ## [19] Rtsne_0.15                  mclust_5.4.5               
-## [21] scdney_0.1.5                edgeR_3.26.7               
-## [23] limma_3.40.6                dplyr_0.8.3                
-## [25] SingleCellExperiment_1.7.7  SummarizedExperiment_1.15.9
-## [27] DelayedArray_0.11.8         BiocParallel_1.18.1        
-## [29] matrixStats_0.55.0          Biobase_2.44.0             
-## [31] GenomicRanges_1.36.1        GenomeInfoDb_1.20.0        
-## [33] IRanges_2.19.17             S4Vectors_0.23.25          
-## [35] BiocGenerics_0.31.6        
+## [21] scdney_0.1.5                edgeR_3.28.0               
+## [23] limma_3.42.0                dplyr_0.8.3                
+## [25] SingleCellExperiment_1.8.0  SummarizedExperiment_1.16.0
+## [27] DelayedArray_0.12.0         BiocParallel_1.20.0        
+## [29] matrixStats_0.55.0          Biobase_2.46.0             
+## [31] GenomicRanges_1.38.0        GenomeInfoDb_1.22.0        
+## [33] IRanges_2.20.1              S4Vectors_0.24.1           
+## [35] BiocGenerics_0.32.0        
 ## 
 ## loaded via a namespace (and not attached):
 ##   [1] utf8_1.1.4             R.utils_2.9.0          tidyselect_0.2.5      
@@ -771,49 +836,48 @@ dim(liver_new3)</code></pre>
 ##   [7] combinat_0.0-8         docopt_0.6.1           munsell_0.5.0         
 ##  [10] codetools_0.2-16       statmod_1.4.32         withr_2.1.2           
 ##  [13] colorspace_1.4-1       fastICA_1.2-2          highr_0.8             
-##  [16] knitr_1.24             rstudioapi_0.10        DescTools_0.99.28     
+##  [16] knitr_1.26             rstudioapi_0.10        DescTools_0.99.31     
 ##  [19] ggsignif_0.6.0         pbmcapply_1.5.0        labeling_0.3          
-##  [22] slam_0.1-46            GenomeInfoDbData_1.2.1 polyclip_1.10-0       
-##  [25] farver_1.1.0           pheatmap_1.0.12        rhdf5_2.28.0          
+##  [22] slam_0.1-46            GenomeInfoDbData_1.2.2 polyclip_1.10-0       
+##  [25] farver_2.0.1           pheatmap_1.0.12        rhdf5_2.30.1          
 ##  [28] vctrs_0.2.0            generics_0.0.2         ipred_0.9-9           
-##  [31] xfun_0.9               randomForest_4.6-14    diptest_0.75-7        
-##  [34] R6_2.4.0               doParallel_1.0.15      graphlayouts_0.5.0    
+##  [31] xfun_0.11              randomForest_4.6-14    diptest_0.75-7        
+##  [34] R6_2.4.1               doParallel_1.0.15      graphlayouts_0.5.0    
 ##  [37] locfit_1.5-9.1         bitops_1.0-6           assertthat_0.2.1      
 ##  [40] ggraph_2.0.0           nnet_7.3-12            gtable_0.3.0          
-##  [43] tidygraph_1.1.2        timeDate_3043.102      rlang_0.4.0           
+##  [43] tidygraph_1.1.2        timeDate_3043.102      rlang_0.4.2           
 ##  [46] zeallot_0.1.0          lazyeval_0.2.2         ModelMetrics_1.2.2    
 ##  [49] acepack_1.4.1          broom_0.5.2            checkmate_1.9.4       
 ##  [52] yaml_2.2.0             reshape2_1.4.3         abind_1.4-5           
-##  [55] backports_1.1.5        Hmisc_4.2-0            caret_6.0-84          
+##  [55] backports_1.1.5        Hmisc_4.3-0            caret_6.0-84          
 ##  [58] tools_3.6.1            lava_1.6.6             clusteval_0.1         
 ##  [61] ellipsis_0.3.0         RColorBrewer_1.1-2     proxy_0.4-23          
-##  [64] ggridges_0.5.1         Rcpp_1.0.2             base64enc_0.1-3       
-##  [67] zlibbioc_1.30.0        purrr_0.3.2            RCurl_1.95-4.12       
+##  [64] ggridges_0.5.1         Rcpp_1.0.3             base64enc_0.1-3       
+##  [67] zlibbioc_1.32.0        purrr_0.3.3            RCurl_1.95-4.12       
 ##  [70] densityClust_0.3       rpart_4.1-15           cowplot_1.0.0         
-##  [73] ggrepel_0.8.1          data.table_1.12.2      manipulate_1.0.1      
-##  [76] RANN_2.6.1             mvtnorm_1.0-11         mitml_0.3-7           
-##  [79] amap_0.8-17            evaluate_0.14          sparsesvd_0.2         
-##  [82] gridExtra_2.3          HSMMSingleCell_1.4.0   compiler_3.6.1        
-##  [85] tibble_2.1.3           mice_3.6.0             crayon_1.3.4          
-##  [88] R.oo_1.22.0            minqa_1.2.4            htmltools_0.4.0       
-##  [91] proxyC_0.1.5           segmented_1.0-0        mgcv_1.8-28           
-##  [94] Formula_1.2-3          snow_0.4-3             tidyr_1.0.0           
-##  [97] expm_0.999-4           RcppParallel_4.4.3     lubridate_1.7.4       
-## [100] tweenr_1.0.1           MASS_7.3-51.4          boot_1.3-23           
-## [103] cli_1.1.0              R.methodsS3_1.7.1      pan_1.6               
-## [106] gower_0.2.1            igraph_1.2.4.1         pkgconfig_2.0.3       
-## [109] foreign_0.8-72         recipes_0.1.6          hopach_2.44.0         
-## [112] foreach_1.4.7          dqrng_0.2.1            blme_1.0-4            
-## [115] XVector_0.24.0         minpack.lm_1.2-1       prodlim_2018.04.18    
-## [118] digest_0.6.21          rmarkdown_1.15         htmlTable_1.13.1      
-## [121] dendextend_1.12.0      jomo_2.6-9             nloptr_1.2.1          
-## [124] lifecycle_0.1.0        nlme_3.1-141           Rhdf5lib_1.6.0        
-## [127] fansi_0.4.0            pillar_1.4.2           lattice_0.20-38       
-## [130] survival_2.44-1.1      glue_1.3.1             qlcMatrix_0.9.7       
-## [133] FNN_1.1.3              iterators_1.0.12       ggforce_0.3.1         
-## [136] class_7.3-15           stringi_1.4.3          HDF5Array_1.12.2      
-## [139] mixtools_1.1.0         doSNOW_1.0.18          latticeExtra_0.6-28   
-## [142] e1071_1.7-2</code></pre>
+##  [73] ggrepel_0.8.1          data.table_1.12.6      RANN_2.6.1            
+##  [76] mvtnorm_1.0-11         mitml_0.3-7            amap_0.8-17           
+##  [79] evaluate_0.14          sparsesvd_0.2          gridExtra_2.3         
+##  [82] HSMMSingleCell_1.6.0   compiler_3.6.1         tibble_2.1.3          
+##  [85] mice_3.6.0             crayon_1.3.4           R.oo_1.23.0           
+##  [88] minqa_1.2.4            htmltools_0.4.0        proxyC_0.1.5          
+##  [91] segmented_1.0-0        mgcv_1.8-28            Formula_1.2-3         
+##  [94] snow_0.4-3             tidyr_1.0.0            expm_0.999-4          
+##  [97] RcppParallel_4.4.4     lubridate_1.7.4        tweenr_1.0.1          
+## [100] MASS_7.3-51.4          boot_1.3-23            cli_1.1.0             
+## [103] R.methodsS3_1.7.1      pan_1.6                gower_0.2.1           
+## [106] igraph_1.2.4.2         pkgconfig_2.0.3        foreign_0.8-72        
+## [109] recipes_0.1.7          hopach_2.46.0          foreach_1.4.7         
+## [112] dqrng_0.2.1            XVector_0.26.0         minpack.lm_1.2-1      
+## [115] prodlim_2019.11.13     digest_0.6.23          rmarkdown_1.18        
+## [118] htmlTable_1.13.2       dendextend_1.13.2      jomo_2.6-10           
+## [121] nloptr_1.2.1           lifecycle_0.1.0        nlme_3.1-141          
+## [124] Rhdf5lib_1.8.0         fansi_0.4.0            pillar_1.4.2          
+## [127] lattice_0.20-38        survival_2.44-1.1      glue_1.3.1            
+## [130] qlcMatrix_0.9.7        FNN_1.1.3              iterators_1.0.12      
+## [133] ggforce_0.3.1          class_7.3-15           stringi_1.4.3         
+## [136] HDF5Array_1.14.1       mixtools_1.1.0         doSNOW_1.0.18         
+## [139] latticeExtra_0.6-28    e1071_1.7-3</code></pre>
 </div>
 
 

@@ -30,6 +30,7 @@ library(scales)
 library(ggpubr)
 library(stringr)
 library(forcats)
+library(SingleCellExperiment)
 
 theme_set(theme_classic(16))
 ```
@@ -408,6 +409,61 @@ dim(liver_new3)
 ```
 
 
+# Create `SingleCellExperiment`
+
+For further single cell data analysis, we will create a `SingleCellExperiment` object using our filtered count matrix.
+
+
+```{r}
+liver_sce = SingleCellExperiment::SingleCellExperiment(assay = list(counts = as.matrix(liver_new3)))
+liver_sce
+```
+
+
+
+Noted that this experiment contains the spike-ins transcripts. We can use `splitAltExp` to remove the corresponding rows (Genes start with "ERCC-") from the main `SingleCellExperiment`, and stored these rows into a nested alternative Experiment (`altExp()`).
+
+
+```{r}
+is_spike = grepl("^ERCC-", rownames(liver_sce))
+liver_sce = splitAltExps(liver_sce, ifelse(is_spike, "ERCC", "gene"))
+altExpNames(liver_sce)
+altExp(liver_sce)
+```
+
+
+Lastly in this preprocessing tutorial, we will perform log-transformation for the counts matrix and store the normalised matrix as `logcounts` in Assays.
+
+```{r}
+liver_counts <- counts(liver_sce)
+lib_sizes <- colSums(liver_counts)
+size_factors <- lib_sizes/mean(lib_sizes)
+logcounts(liver_sce) <- log2(t(t(liver_counts)/size_factors) + 1)
+assayNames(liver_sce)
+```
+
+```{r}
+liver_sce
+```
+
+# Reference
+
+Aaron Lun and Davide Risso (2019). SingleCellExperiment: S4 Classes for Single Cell Data. R package version 1.7.7.
+
+Lun ATL, Riesenfeld S, Andrews T, Dao T, Gomes T,
+participants in the 1st Human Cell Atlas Jamboree,
+Marioni JC (2019). “EmptyDrops: distinguishing cells
+from empty droplets in droplet-based single-cell RNA
+sequencing data.” _Genome Biol._, *20*, 63. doi:
+10.1186/s13059-019-1662-y (URL:
+https://doi.org/10.1186/s13059-019-1662-y).
+
+Griffiths JA, Richard AC, Bach K, Lun ATL, Marioni
+JC (2018). “Detection and removal of barcode
+swapping in single-cell RNA-seq data.” _Nat.
+Commun._, *9*(1), 2667. doi:
+10.1038/s41467-018-05083-x (URL:
+https://doi.org/10.1038/s41467-018-05083-x).
 # Session Info
 ```{r}
 sessionInfo()
