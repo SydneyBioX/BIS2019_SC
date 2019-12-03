@@ -18,7 +18,7 @@ std_pkgs <- c(
 	"devtools", "edgeR",
 	"ggpubr", "MAST", 
 	"plyr", "Rtsne", 
-	"scales", "scater", 
+	"scales", "scater", "SingleCellExperiment",
 	"scran", "tidyverse", 
 	"viridis", "monocle",
 	"DescTools")
